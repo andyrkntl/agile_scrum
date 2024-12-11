@@ -1,0 +1,34 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Page d'inscription{% endblock %}</title>
+    
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+    
+    <!-- Lien vers des styles personnalisés -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+    <div class="container">
+        <nav>
+            <!-- Navigation commune, si nécessaire -->
+        </nav>
+        
+        <div class="content">
+            <!-- Contenu spécifique de chaque page -->
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+
+    <!-- Lien vers Bootstrap JS et jQuery -->
+    <script src="{% static 'jquery/jquery.js' %}"></script>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>

@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}Inscription{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-6 col-md-8 col-sm-12">
+            <!-- Card with modern design inspired by the image -->
+            <div class="card shadow-lg p-4 rounded" style="background-color: #2b2d42; color: #edf2f4; opacity: 0;" id="signup-card">
+                <ul class="nav nav-tabs">
+                    <li class="nav-item">
+                        <a class="nav-link text-light" href="{% url 'login' %}">CONNEXION</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active bg-light text-dark" href="{% url 'signup' %}">INSCRIPTION</a>
+                    </li>
+                </ul>
+                <div class="card-body">
+                    <form method="POST">
+                        {% csrf_token %}
+                        
+                        <div class="form-group">
+                            <label for="email_compte" class="text-light">Email du compte</label>
+                            <input type="email" id="email_compte" name="email_compte" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password" class="text-light">Mot de passe</label>
+                            <input type="password" id="password" name="password" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password_confirm" class="text-light">Confirmer le mot de passe</label>
+                            <input type="password" id="password_confirm" name="password_confirm" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nom_prs" class="text-light">Nom</label>
+                            <input type="text" id="nom_prs" name="nom_prs" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="prenom_prs" class="text-light">Prénom</label>
+                            <input type="text" id="prenom_prs" name="prenom_prs" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email_prs" class="text-light">Email personnel</label>
+                            <input type="email" id="email_prs" name="email_prs" class="form-control form-control-lg border-info" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="role_pers" class="text-light">Rôle</label>
+                            <select id="role_pers" name="role_pers" class="form-control form-control-lg border-info" required>
+                                <option value="organisateur">Organisateur</option>
+                                <option value="participant">Participant</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group text-center">
+                            <button type="submit" class="btn btn-primary btn-lg px-5 py-3 mt-4" style="background-color: #8d99ae; border-color: #8d99ae;"
+                                style="background-color: #8d99ae; border-color: #8d99ae;" 
+                                onmouseover="this.style.backgroundColor='#6c7a89'; this.style.borderColor='#6c7a89';" 
+                                onmouseout="this.style.backgroundColor='#8d99ae'; this.style.borderColor='#8d99ae';">
+                            S'inscrire
+                        </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Animation for card appearance
+    window.onload = function() {
+        const card = document.getElementById('signup-card');
+        card.style.transition = 'opacity 1s ease-in-out';
+        card.style.opacity = 1; // Fade in effect
+    }
+</script>
+{% endblock %}
+{% endblock %}
