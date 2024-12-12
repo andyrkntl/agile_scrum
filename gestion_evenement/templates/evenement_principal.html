@@ -28,7 +28,7 @@
                         <a class="nav-link active" href="{%url 'afficher_tous'%}">Événements</a>
                     </li>
                     <!-- Dropdown Notifications -->
-                    <li class="nav-item dropdown">
+                    <!-- <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button"
                             data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="bi bi-bell"></i> Notifications
@@ -44,7 +44,35 @@
                             </li>
                             <li><a class="dropdown-item text-center" href="#">Voir toutes les notifications</a></li>
                         </ul>
+                    </li> -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i>
+                            Notifications
+                            {% if notifications %}
+                            <span class="badge bg-danger">{{ notifications|length }}</span>
+                            {% endif %}
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                            {% if notifications %}
+                            {% for notif in notifications %}
+                            <li>
+                                <a class="dropdown-item" href="#">{{ notif.contenu_notif }}</a>
+                            </li>
+                            {% endfor %}
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-center" href="{% url 'afficher_notifications' %}">Voir
+                                    toutes les
+                                    notifications</a></li>
+                            {% else %}
+                            <li class="dropdown-item text-center">Aucune notification</li>
+                            {% endif %}
+                        </ul>
                     </li>
+
                     <li class="nav-item">
                         <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Messages</a>
                     </li>

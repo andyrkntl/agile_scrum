@@ -59,7 +59,7 @@ def login_view(request):
         if check_password(password, compte.mdp_compte):
             request.session['compte_id'] = compte.id
             messages.success(request, "Connexion réussie.")
-            return redirect('home')
+            return redirect('acceuil')
         else:
             messages.error(request, "Email ou mot de passe incorrect.")
             return redirect('login')
@@ -85,7 +85,7 @@ def home_view(request):
     return render(request, 'gestion_evenement/home.html', {'personne': personne})
 
 def index(request):
-    return render (request,'index.html')
+    return render (request,'acceuil.html')
 
 # Fonction pour afficher la liste des événements avec filtres et recherche
 def afficher_tous_evenements(request):
@@ -107,8 +107,6 @@ def afficher_tous_evenements(request):
     
     return render(request, 'evenement_principal.html', {'evenements': evenements})
 
-@login_required
-# Fonction pour créer un événement et notifier les participants
 def creer_evenement(request):
     if request.method == 'POST':
         form = EvenementForm(request.POST)
@@ -118,7 +116,6 @@ def creer_evenement(request):
             evenement.id_prs = organisateur
             evenement.save()
 
-            # Notifier l'organisateur
             Notifier.objects.create(
                 id_event=evenement,
                 id_prs=organisateur,
@@ -187,8 +184,9 @@ def supprimer_evenement(request, evenement_id):
 
 # Fonction pour afficher les notifications
 @login_required
-def afficher_notifications(request):
+def afficher_toutes_notifications(request):
     utilisateur = get_object_or_404(Personne, id_compte=request.user.id)
     notifications = Notifier.objects.filter(id_prs=utilisateur).order_by('-date_notif')
     # return render(request, 'notifications.html', {'notifications': notifications})
-    return redirect ('index')
+    return redirect('index')
+
