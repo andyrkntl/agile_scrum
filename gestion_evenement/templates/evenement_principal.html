@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Événements - EventOrg</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-2">
+            <a class="navbar-brand" href="{%url 'acceuil'%}">EventOrg</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'acceuil'%}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{%url 'afficher_tous'%}">Événements</a>
+                    </li>
+                    <!-- Dropdown Notifications -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell"></i> Notifications
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
+                            <li><a class="dropdown-item" href="#">Nouvel événement ajouté : Conférence Tech 2024</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Mise à jour sur l'événement : Meetup Développeurs</a>
+                            </li>
+                            <li><a class="dropdown-item" href="#">Rappel : Atelier Marketing demain</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-center" href="#">Voir toutes les notifications</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Liste des événements -->
+    <div class="container mt-4">
+        <h1 class="mb-4">Événements à venir</h1>
+
+        <!-- Barre de recherche et filtres -->
+        <form method="GET" action="{% url 'afficher_tous' %}">
+            <div class="row mb-4">
+                <div class="col-md-4 mb-3">
+                    <input type="text" id="search-input" name="search" class="form-control"
+                        placeholder="Rechercher un événement...">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="date" id="date-start" name="start_date" class="form-control"
+                        placeholder="Date de début">
+                </div>
+                <div class="col-md-3 mb-3">
+                    <input type="date" id="date-end" name="end_date" class="form-control" placeholder="Date de fin">
+                </div>
+                <div class="col-md-2 mb-3">
+                    <button class="btn btn-secondary w-100" type="submit">Filtrer</button>
+                </div>
+            </div>
+        </form>
+
+        <!-- Cartes des événements -->
+        <div class="row" id="event-cards">
+            {% for evenement in evenements %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ evenement.image_url }}" class="card-img-top" alt="{{ evenement.titre_event }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ evenement.titre_event }}</h5>
+                        <p class="card-text"><strong>Date :</strong> {{ evenement.date_debut_event }} - {{
+                            evenement.date_fin_event }}</p>
+                        <p class="card-text"><strong>Lieu :</strong> {{ evenement.lieu_event }}</p>
+                        <p class="card-text"><strong>Organisateur :</strong> {{ evenement.organisateur }}</p>
+                        <a href="#" class="btn btn-primary">Voir les détails</a>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p>Aucun événement trouvé.</p>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination -->
+        <nav>
+            <ul class="pagination justify-content-center">
+                <!-- Dynamiser les pages si nécessaire -->
+                <li class="page-item disabled">
+                    <a class="page-link" href="#">Précédent</a>
+                </li>
+                <li class="page-item active">
+                    <a class="page-link" href="#">1</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">2</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">3</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Suivant</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-4 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>À propos d'EventOrg</h5>
+                    <p>Votre partenaire de confiance pour l'organisation et la découverte d'événements uniques.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="evenements.html">Événements</a></li>
+                        <li><a href="creer-evenement.html">Créer un événement</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Suivez-nous</h5>
+                    <a href="#" class="text-decoration-none me-2">Facebook</a>
+                    <a href="#" class="text-decoration-none me-2">Twitter</a>
+                    <a href="#" class="text-decoration-none">Instagram</a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2023 EventOrg. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

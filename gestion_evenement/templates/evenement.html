@@ -1,0 +1,99 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un événement - EventOrg</title>
+    <link href="{% static 'bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'affiche_org/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-2">
+            <a class="navbar-brand" href="index.html">EventOrg</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="index.html">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="evenements.html">Événements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Aide</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Liste des événements -->
+    <div class="container mt-4">
+        <h1 class="mb-4">Événements créés</h1>
+        <div id="events-container" class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            {% for evenement in evenements %}
+            <div class="col">
+                <div class="card">
+                    <img src="{{ evenement.image_url }}" class="card-img-top" alt="{{ evenement.titre_event }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ evenement.titre_event }}</h5>
+                        <p class="card-text">{{ evenement.description_event }}</p>
+                        <p><strong>Date:</strong> {{ evenement.date_debut_event }} - {{ evenement.date_fin_event }}</p>
+                        <a href="{% url 'modifier_evenement' evenement.id %}" class="btn btn-warning">Modifier</a>
+                        <a href="{% url 'supprimer_evenement' evenement.id %}" class="btn btn-danger">Supprimer</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-4 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>À propos d'EventOrg</h5>
+                    <p>Votre partenaire de confiance pour l'organisation et la découverte d'événements uniques.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="evenements.html">Événements</a></li>
+                        <li><a href="creer-evenement.html">Créer un événement</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Suivez-nous</h5>
+                    <a href="#" class="text-decoration-none me-2">Facebook</a>
+                    <a href="#" class="text-decoration-none me-2">Twitter</a>
+                    <a href="#" class="text-decoration-none">Instagram</a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2023 EventOrg. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'affiche_org/evenement.js' %}"></script>
+</body>
+
+</html>

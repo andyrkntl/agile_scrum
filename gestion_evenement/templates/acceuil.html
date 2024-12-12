@@ -1,0 +1,135 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EventOrg - Organisation d'événements</title>
+    <link href="{% static 'bootstrap/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'event_index/index.css' %}" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation  -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-2">
+            <a class="navbar-brand" href="{%url 'acceuil'%}">EventOrg</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'acceuil'%}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{%url 'afficher_tous'%}">Événements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{%url 'creer_evenement'%}">Créer un événement</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Aide</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">À propos</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Connexion</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+
+    <!-- Search Bar -->
+    <div class="container mt-4">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form class="d-flex">
+                    <input class="form-control me-2" type="search" placeholder="Rechercher un événement"
+                        aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit">Rechercher</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Carousel -->
+    <div id="eventCarousel" class="carousel slide mt-4" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="./src/1.png" class="d-block w-100" alt="Événement 1">
+            </div>
+            <div class="carousel-item">
+                <img src="./src/2.png" class="d-block w-100" alt="Événement 2">
+            </div>
+            <div class="carousel-item">
+                <img src="./src/3.png" class="d-block w-100" alt="Événement 3">
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Showcase -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-6">
+                <img src="/placeholder.svg?height=300&width=500" class="img-fluid" alt="Événement en vedette">
+            </div>
+            <div class="col-md-6">
+                <h2>Événement en vedette</h2>
+                <p>Description de l'événement en vedette. Cet espace permet de mettre en avant un événement particulier
+                    et de donner plus de détails sur son contenu, sa date, son lieu, etc.</p>
+                <a href="#" class="btn btn-primary">En savoir plus</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Site Description -->
+    <div class="container mt-4">
+        <h2 class="text-center">Bienvenue sur EventOrg</h2>
+        <p class="text-center">EventOrg est votre plateforme de choix pour l'organisation et la découverte d'événements.
+            Que vous soyez un organisateur cherchant à créer un événement inoubliable ou un participant à la recherche
+            de nouvelles expériences, EventOrg vous offre les outils et les ressources nécessaires pour réussir.
+            Explorez notre vaste sélection d'événements, de la musique aux conférences en passant par les ateliers
+            créatifs, et rejoignez une communauté passionnée.</p>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-4 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>À propos d'EventOrg</h5>
+                    <p>Votre partenaire de confiance pour l'organisation et la découverte d'événements uniques.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Accueil</a></li>
+                        <li><a href="#">Événements</a></li>
+                        <li><a href="#">Créer un événement</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Suivez-nous</h5>
+                    <a href="#" class="text-decoration-none me-2">Facebook</a>
+                    <a href="#" class="text-decoration-none me-2">Twitter</a>
+                    <a href="#" class="text-decoration-none">Instagram</a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2023 EventOrg. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="{% static 'bootstrap/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'evenet_index/app.js' %}"></script>
+</body>
+
+</html>
