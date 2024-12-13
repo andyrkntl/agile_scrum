@@ -11,5 +11,6 @@ urlpatterns = [
     path('evenement/modifier/<int:evenement_id>/', views.modifier_evenement, name='modifier_evenement'),
     path('evenement/supprimer/<int:evenement_id>/', views.supprimer_evenement, name='supprimer_evenement'),
     path('evenement/',views.afficher_tous_evenements,name='afficher_tous'),
-    path('notification/',views.afficher_toutes_notifications,name="afficher_notifications")
+    path('notification/',views.afficher_notifications,name="afficher_notifications"),
+    path('evenement/<int:evenement_id>/', views.afficher_detail_evenement, name='detail_evenement'),
 ]

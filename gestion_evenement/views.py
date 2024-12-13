@@ -6,19 +6,20 @@ from .forms import EvenementForm
 from .models import Compte, Personne, Evenement, Notifier, Participer
 from django.contrib.auth.decorators import login_required
 
+# Page d'accueil
+def index(request):
+    return render(request, "acceuil.html")
+
 # Décorateurs personnalisés pour vérifier les rôles des utilisateurs
 def organisateur_required(view_func):
     def wrapper(request, *args, **kwargs):
         utilisateur = get_object_or_404(Personne, id_compte=request.session.get('compte_id'))
         if utilisateur.role_pers != 'organisateur':
             messages.error(request, "Vous n'êtes pas autorisé à accéder à cette page.")
-            return redirect('afficher_tous_evenements')
+            return redirect(afficher_tous_evenements)
         return view_func(request, *args, **kwargs)
     return wrapper
 
-# Page d'accueil
-def index(request):
-    return render(request, "acceuil.html")
 
 # Inscription
 def signup_view(request):
@@ -100,9 +101,15 @@ def afficher_tous_evenements(request):
         evenements = evenements.filter(date_debut_event__gte=start_date)
 
     if end_date:
-        evenements = evenements.filter(date_debut_event__lte=end_date)
+        evenements = evenements.filter(date_fin_event__lte=end_date)
 
-    return render(request, 'evenement_principal.html', {'evenements': evenements})
+    utilisateur = get_object_or_404(Personne, id_compte=request.session.get('compte_id'))
+    notifications = Notifier.objects.filter(id_prs=utilisateur).order_by('-date_notif')
+
+    return render(request, 'evenement_principal.html', {
+        'evenements': evenements,
+        'notifications': notifications,
+    })
 
 # Création d'un événement (organisateur uniquement)
 @organisateur_required
@@ -182,7 +189,11 @@ def supprimer_evenement(request, evenement_id):
     messages.success(request, f"L'événement '{titre_event}' a été supprimé.")
     return redirect('afficher_org')
 
-def afficher_toutes_notifications(request):
+def afficher_notifications(request):
     utilisateur = get_object_or_404(Personne, id_compte=request.session.get('compte_id'))
     notifications = Notifier.objects.filter(id_prs=utilisateur).order_by('-date_notif')
-    return render(request, 'notif.html', {'notifications': notifications})
+    return notifications
+
+def afficher_detail_evenement(request, evenement_id):
+    evenement = get_object_or_404(Evenement, id=evenement_id)
+    return render(request, 'evenement_details.html', {'evenement': evenement})

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Détails de l'événement - EventOrg</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+    <link href="styles.css" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid px-2">
+            <a class="navbar-brand" href="{% url 'acceuil' %}">EventOrg</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'acceuil' %}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'afficher_tous' %}">Événements</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Aide</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">À propos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-bell"></i> Notifications</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-envelope"></i> Messages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Déconnexion</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white" href="creer-evenement.html">Créer un
+                            événement</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Détails de l'événement -->
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-8">
+                <h1 id="event-title" class="mb-3">{{ evenement.titre_event }}</h1>
+                <img id="event-image" src="{{ evenement.image_url }}" alt="Image de l'événement"
+                    class="img-fluid rounded mb-4">
+                <div class="mb-4">
+                    <h2>Description</h2>
+                    <p id="event-description">{{ evenement.description_event }}</p>
+                </div>
+                <div class="mb-4">
+                    <h2>Programme</h2>
+                    <ul id="event-schedule" class="list-group">
+                        {% for item in evenement.programme %}
+                        <li class="list-group-item">{{ item.heure }} - {{ item.description }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Informations pratiques</h5>
+                        <p><i class="bi bi-calendar"></i> <span id="event-date">{{ evenement.date_event }}</span></p>
+                        <p><i class="bi bi-clock"></i> <span id="event-time">{{ evenement.heure_event }}</span></p>
+                        <p><i class="bi bi-geo-alt"></i> <span id="event-location">{{ evenement.lieu_event }}</span></p>
+                        <p><i class="bi bi-ticket"></i> <span id="event-price">{{ evenement.prix_event }}</span></p>
+                        <button class="btn btn-primary w-100 mb-2">Réserver</button>
+                        <button class="btn btn-outline-primary w-100" id="share-button">
+                            <i class="bi bi-share"></i> Partager
+                        </button>
+                    </div>
+                </div>
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Organisateur</h5>
+                        <p id="event-organizer">{{ evenement.organisateur.nom }}</p>
+                        <button class="btn btn-outline-secondary w-100">Contacter l'organisateur</button>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Localisation</h5>
+                        <div id="map" style="height: 200px; background-color: #eee;">
+                            <!-- La carte sera chargée ici -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-light mt-4 py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>À propos d'EventOrg</h5>
+                    <p>Votre partenaire de confiance pour l'organisation et la découverte d'événements uniques.</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Liens rapides</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="index.html">Accueil</a></li>
+                        <li><a href="evenements.html">Événements</a></li>
+                        <li><a href="creer-evenement.html">Créer un événement</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h5>Suivez-nous</h5>
+                    <a href="#" class="text-decoration-none me-2">Facebook</a>
+                    <a href="#" class="text-decoration-none me-2">Twitter</a>
+                    <a href="#" class="text-decoration-none">Instagram</a>
+                </div>
+            </div>
+            <hr>
+            <p class="text-center mb-0">&copy; 2023 EventOrg. Tous droits réservés.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY"></script>
+    <script src="evenement-details.js"></script>
+</body>
+
+</html>
