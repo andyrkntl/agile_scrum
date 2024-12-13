@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notifications</title>
+    <!-- Lien vers Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .notification.unread {
+            background-color: #f8f9fa;
+            /* Couleur pour les notifications non lues */
+        }
+
+        .mark-as-read {
+            color: #007bff;
+            cursor: pointer;
+        }
+
+        .mark-as-read:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container py-5">
+        <h1 class="mb-4 text-center">Mes Notifications</h1>
+        <div class="card">
+            <div class="card-body">
+                {% if notifications %}
+                <ul class="list-group">
+                    {% for notif in notifications %}
+                    <li
+                        class="list-group-item d-flex justify-content-between align-items-center notification {% if not notif.lu %}unread{% endif %}">
+                        <div>
+                            <p class="mb-1">{{ notif.message }}</p>
+                            <small class="text-muted">{{ notif.date_notif|date:"d M Y, H:i" }}</small>
+                        </div>
+                        {% if not notif.lu %}
+                        <button class="btn btn-link p-0 mark-as-read" onclick="marquerCommeLu('{{ notif.id }}')">
+                            Marquer comme lu
+                        </button>
+                        {% endif %}
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="text-center">Aucune notification disponible.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Lien vers Bootstrap JS et dépendances -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function marquerCommeLu(notifId) {
+            fetch(`/notifications/marquer-lu/${notifId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': '{{ csrf_token }}',
+                }
+            })
+                .then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    } else {
+                        alert('Erreur lors de la mise à jour de la notification.');
+                    }
+                });
+        }
+    </script>
+</body>
+
+</html>
